@@ -1,18 +1,24 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+var express = require('express'),
+    app = express(),
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose');
 
+mongoose.connect("mongodb://localhost/yelp_camp");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-var campgrounds = [
-    {name: "Salmon Creek", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Salmon_Creek.jpg/1200px-Salmon_Creek.jpg"},
-    {name: "Mountains", image: "https://www.nps.gov/lacl/planyourvisit/images/Image-w-cred-cap_-1200w-_-Visit-Silver-Salmon-Creek-Page_2.jpg"},
-    {name: "Colorado", image: "http://www.campoutcolorado.com/wp-content/grand-media/image/camp-out-colorado-carter-lake-pine-campground.jpg"},
-    {name: "Salmon Creek", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Salmon_Creek.jpg/1200px-Salmon_Creek.jpg"},
-    {name: "Mountains", image: "https://www.nps.gov/lacl/planyourvisit/images/Image-w-cred-cap_-1200w-_-Visit-Silver-Salmon-Creek-Page_2.jpg"},
-    {name: "Colorado", image: "http://www.campoutcolorado.com/wp-content/grand-media/image/camp-out-colorado-carter-lake-pine-campground.jpg"}
-];
+////////////////////////////////
+// SCHEMA SETUP
+////////////////////////////////
+var campgroundSchema = new mongoose.Schema({
+    name: String,
+    image: String
+});
+
+var Campground = mongoose.model("Campground", campgroundSchema);
+
+////////////////////////////////
+////////////////////////////////
 
 ////////////////////////////////
 // ROUTES
@@ -21,8 +27,15 @@ app.get("/", function(req,res){
     res.render("landing");
 });
 
-app.get("/campgrounds", function(req,res){   
-    res.render("campgrounds", {campgrounds: campgrounds});
+app.get("/campgrounds", function(req,res){    
+    //Get all campgrounds from DB
+    Campground.find({}, function(err, campgrounds){
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("campgrounds", {campgrounds: campgrounds});
+        }
+    });
 });
 
 app.get("/campgrounds/new", function(req,res){
@@ -33,13 +46,18 @@ app.get("/campgrounds/new", function(req,res){
 app.post("/campgrounds", function(req, res){
     var name = req.body.name;
     var img = req.body.image;
-    campgrounds.push({
+    // Add campground found in form to DB
+    Campground.create({
         name: name,
         image: img
+    }, function(err, campground){
+        if(err) {
+            console.log(err);
+        } else {
+            res.redirect("/campgrounds");
+        }
     });
-    res.redirect("/campgrounds");
 });
-
 
 ////////////////////////////////
 ////////////////////////////////
