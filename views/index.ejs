@@ -21,6 +21,10 @@
                                 <%= campground.name %>
                             </h4>
                         </div>
+                        <p>
+                            <!-- _id is an automatically made mongo variable -->
+                            <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More info</a>
+                        </p>
                     </div>
                 </div>
                 <% }); %>
