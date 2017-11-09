@@ -7,19 +7,8 @@ mongoose.connect("mongodb://localhost/yelp_camp");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-////////////////////////////////
-// SCHEMA SETUP
-////////////////////////////////
-var campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    desc: String
-});
-
-var Campground = mongoose.model("Campground", campgroundSchema);
-
-////////////////////////////////
-////////////////////////////////
+// Get campground model from file
+var Campground = require('./models/campground.js');
 
 ////////////////////////////////
 // ROUTES
