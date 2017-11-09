@@ -1,14 +1,30 @@
+////////////////////////////////
+// REQUIREMENTS
+////////////////////////////////
 var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    seedDB = require('./seeds.js');
 
+////////////////////////////////
+////////////////////////////////
+
+// Connect to monogoDB
 mongoose.connect("mongodb://localhost/yelp_camp");
+
+// Use body parser for easy parsing
 app.use(bodyParser.urlencoded({extended: true}));
+
 app.set("view engine", "ejs");
 
-// Get campground model from file
-var Campground = require('./models/campground.js');
+// Get all models from files
+var Campground = require('./models/campground.js'),
+    Comment = require('./models/comment.js');
+
+
+// Seed the database
+seedDB();
 
 ////////////////////////////////
 // ROUTES
