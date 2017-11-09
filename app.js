@@ -33,6 +33,7 @@ app.get("/", function(req,res){
     res.render("landing");
 });
 
+// INDEX
 app.get("/campgrounds", function(req,res){    
     //Get all campgrounds from DB
     Campground.find({}, function(err, campgrounds){
@@ -44,10 +45,12 @@ app.get("/campgrounds", function(req,res){
     });
 });
 
+// NEW
 app.get("/campgrounds/new", function(req,res){
     res.render("new.ejs");
 });
 
+// CREATE
 app.post("/campgrounds", function(req, res){
     var name = req.body.name;
     var img = req.body.image;
@@ -66,9 +69,10 @@ app.post("/campgrounds", function(req, res){
     });
 });
 
+// SHOW
 app.get("/campgrounds/:id", function(req,res){
-    // Find campground with ID
-    Campground.findById(req.params.id, function(err, foundCamp){
+    // Find campground with ID and populate comments array
+    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCamp){
         if(err) {
             console.log(err);
         } else {

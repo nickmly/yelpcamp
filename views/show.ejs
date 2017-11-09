@@ -11,6 +11,11 @@
                 <div class="thumbnail">
                     <img src="<%= campground.image %>">
                 </div>
+                <ul>
+                    <% campground.comments.forEach(function(comment){ %>
+                        <li><strong><%= comment.author %></strong> - <%= comment.text %></li>
+                    <% }); %>
+                </ul>            
             </div>
         </div>
     </div>
