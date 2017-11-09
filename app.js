@@ -40,14 +40,14 @@ app.get("/campgrounds", function(req,res){
         if(err) {
             console.log(err);
         } else {
-            res.render("index", {campgrounds: campgrounds});
+            res.render("campground/index", {campgrounds: campgrounds});
         }
     });
 });
 
 // NEW
 app.get("/campgrounds/new", function(req,res){
-    res.render("new.ejs");
+    res.render("campground/new");
 });
 
 // CREATE
@@ -77,7 +77,42 @@ app.get("/campgrounds/:id", function(req,res){
             console.log(err);
         } else {
             //Render the found campground
-            res.render("show", {campground: foundCamp});
+            res.render("campground/show", {campground: foundCamp});
+        }
+    });
+});
+
+////////////////////////////////
+// COMMENT ROUTES
+////////////////////////////////
+
+// COMMENT NEW
+app.get("/campgrounds/:id/comments/new", function(req,res){
+    Campground.findById(req.params.id, function(err, foundCamp){
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("comment/new", {campground: foundCamp});
+        }
+    });
+});
+
+// COMMENT CREATE
+app.post("/campgrounds/:id/comments", function(req,res){
+    Campground.findById(req.params.id, function(err, foundCamp){
+        if(err){
+            console.log(err);
+            res.redirect("/campgrounds");
+        } else {
+            Comment.create(req.body.comment, function(err, comment){
+                if(err) {
+                    console.log(err);
+                } else {
+                    foundCamp.comments.push(comment);
+                    foundCamp.save();
+                    res.redirect("/campgrounds/" + foundCamp._id);
+                }                
+            });
         }
     });
 });
