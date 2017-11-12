@@ -1,0 +1,22 @@
+.caption-full {
+    padding: 9px;
+}
+
+.thumbnail {
+    padding: 0;
+    min-height: 300px;
+}
+
+.thumbnail p {
+    
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
+.thumbnail .index-camp {
+    display: block;
+    height: 192px;
+    max-height: 192px;
+}

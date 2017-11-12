@@ -16,6 +16,9 @@ mongoose.connect("mongodb://localhost/yelp_camp");
 // Use body parser for easy parsing
 app.use(bodyParser.urlencoded({extended: true}));
 
+// Use public directory
+app.use(express.static(__dirname + "/public"));
+
 app.set("view engine", "ejs");
 
 // Get all models from files

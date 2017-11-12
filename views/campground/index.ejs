@@ -14,21 +14,21 @@
             <% campgrounds.forEach(function(campground){ %>
                 <div class="col-md-3 col-sm-6">
                     <div class="thumbnail">
-                        <img src="<%= campground.image %>">
+                        <img class="index-camp" src="<%= campground.image %>">
 
                         <div class="caption">
                             <h4>
                                 <%= campground.name %>
                             </h4>
+                            <p>
+                                <!-- _id is an automatically made mongo variable -->
+                                <a href="/campgrounds/<%= campground._id %>" class="pull-right btn btn-primary">More info</a>
+                            </p>
                         </div>
-                        <p>
-                            <!-- _id is an automatically made mongo variable -->
-                            <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More info</a>
-                        </p>
                     </div>
                 </div>
                 <% }); %>
         </div>
     </div>
 
-<% include ../partials/footer %>
+    <% include ../partials/footer %>
