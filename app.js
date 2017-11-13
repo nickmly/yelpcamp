@@ -4,29 +4,48 @@
 var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local'),
     mongoose = require('mongoose'),
     seedDB = require('./seeds.js');
 
 ////////////////////////////////
 ////////////////////////////////
 
-// Connect to monogoDB
+// Get all models from files
+var Campground = require('./models/campground.js'),
+Comment = require('./models/comment.js'),
+User = require('./models/user.js');
+
+// Connect to mongoDB
 mongoose.connect("mongodb://localhost/yelp_camp");
 
 // Use body parser for easy parsing
 app.use(bodyParser.urlencoded({extended: true}));
 
+////////////////////////////////
+// PASSPORT CONFIG
+////////////////////////////////
+app.use(require('express-session')({
+    secret: "Once again Rusty wins",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+////////////////////////////////
+////////////////////////////////
+
 // Use public directory
 app.use(express.static(__dirname + "/public"));
 
+// Don't have to type .ejs for each res.render func call
 app.set("view engine", "ejs");
 
-// Get all models from files
-var Campground = require('./models/campground.js'),
-    Comment = require('./models/comment.js');
-
-
-// Seed the database
+// Seed the database (seeds.js)
 seedDB();
 
 ////////////////////////////////
