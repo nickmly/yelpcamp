@@ -25,6 +25,9 @@
                         <p>
                             <%= campground.desc %>
                         </p>
+                        <p>
+                            Posted by <%= campground.author.username %>
+                        </p>
                     </div>
                 </div>
                 <div class="well">
@@ -39,7 +42,7 @@
 
 
                                     <strong>
-                                        <%= comment.author %>
+                                        <%= comment.author.username %>
                                     </strong>
                                     <span class="pull-right">
                                         10 days ago

@@ -28,15 +28,19 @@ router.post("/", isLoggedIn, function (req, res) {
     var name = req.body.name;
     var img = req.body.image;
     var desc = req.body.desc;
+    
     // Add campground found in form to DB
     Campground.create({
         name: name,
         image: img,
-        desc: desc
+        desc: desc,        
     }, function (err, campground) {
         if (err) {
             console.log(err);
         } else {
+            campground.author.id = req.user._id;
+            campground.author.username = req.user.username;
+            campground.save();
             res.redirect("/campgrounds");
         }
     });

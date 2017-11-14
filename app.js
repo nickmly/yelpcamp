@@ -53,7 +53,7 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 // Seed the database (seeds.js)
-seedDB();
+// seedDB();
 
 // Set user data to be sent through every route
 app.use(function(req,res,next){
@@ -61,14 +61,15 @@ app.use(function(req,res,next){
     next();
 });
 
+////////////////////////////////
+// ROUTES
+////////////////////////////////
+
 // Use routes
 app.use(authRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes); // All comment routes start with /campgrounds/:id/comments
 app.use("/campgrounds", campgroundRoutes); // All campground routes start with /campgrounds
 
-////////////////////////////////
-// ROUTES
-////////////////////////////////
 app.get("/", function (req, res) {
     res.render("landing");
 });
