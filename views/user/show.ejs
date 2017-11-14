@@ -1,0 +1,26 @@
+<% include ../partials/header %>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1>
+                    <%= user.username %>'s Profile</h1>
+            </div>
+            <div class="panel-body">
+                <h4>Comments</h4>
+                <% if(user.comments.length > 0) { %>
+                    <ul class="list-group">
+                        <% user.comments.forEach(function(comment){ %>
+                            <li class="list-group-item">
+                                <%= comment.text %>
+                            </li>
+                            <% }); %>
+                    </ul>
+                    <% } else { %>
+                        <p>This user has no comments.</p>
+                    <% } %>
+            </div>
+        </div>
+
+    </div>
+
+    <% include ../partials/footer %>

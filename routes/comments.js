@@ -33,10 +33,16 @@ router.post("/", isLoggedIn, function (req, res) {
                     // add username and id to commment
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
+
                     // save comment
                     comment.save();
+
+                    req.user.comments.push(comment);
+                    req.user.save();                    
+
                     foundCamp.comments.push(comment);
                     foundCamp.save();
+                  
                     res.redirect("/campgrounds/" + foundCamp._id);
                 }
             });
