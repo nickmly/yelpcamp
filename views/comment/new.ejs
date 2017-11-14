@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
                         <div class="form-group">
-                            <input class="form-control" type="text" name="comment[author]" placeholder="Author">
+                            <input class="form-control" type="text" value="<%= currentUser.username %>" name="comment[author]" readonly>
                         </div>
                         <div class="form-group">
                             <input class="form-control" type="text" name="comment[text]" placeholder="Comment">
