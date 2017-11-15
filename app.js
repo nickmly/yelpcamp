@@ -7,6 +7,7 @@ var express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
     mongoose = require('mongoose'),
+    methodOverride = require('method-override'),
     seedDB = require('./seeds.js');
 
 ////////////////////////////////
@@ -30,6 +31,9 @@ mongoose.connect("mongodb://localhost/yelp_camp");
 
 // Use body parser for easy parsing
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// For put and delete requests in ejs files
+app.use(methodOverride("_method"));
 
 ////////////////////////////////
 // PASSPORT CONFIG

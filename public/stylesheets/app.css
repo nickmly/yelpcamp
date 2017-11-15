@@ -41,3 +41,7 @@
     height: 192px;
     max-height: 192px;
 }
+
+.delete-btn {
+    display: inline-block;
+}
